@@ -62,4 +62,4 @@ Aplikasi ini membutuhkan dua tabel utama di Supabase:
 Proyek ini bersifat *open-source* dan dapat dimodifikasi untuk keperluan pembelajaran.
 
 ---
-*Dibangun dengan ❤️ oleh [zerovan102](https://github.com/zerovan102) | Level up your life!*
+* [zerovan102](https://github.com/zerovan102) | Level up your life!*
