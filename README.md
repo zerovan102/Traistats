@@ -1,8 +1,8 @@
 # 🌌 Traistats - Obsdslp RPG Dashboard
 
 Traistats adalah aplikasi pelacak kebiasaan (Habit Tracker) interaktif dengan antarmuka bergaya **RPG (Role-Playing Game)**. Aplikasi ini dirancang untuk mengubah rutinitas harian yang membosankan menjadi sebuah *quest* yang menyenangkan dengan sistem leveling, statistik *skill*, dan elemen gamifikasi.
+<img width="1845" height="946" alt="Screenshot 2026-05-05 030203" src="https://github.com/user-attachments/assets/04989508-9c56-432c-bbcd-006fa6b24b2d" />
 
-![Traistats Dashboard](public/globe.svg) <!-- Ganti dengan screenshot aplikasi nanti -->
 
 ## ✨ Fitur Utama
 
