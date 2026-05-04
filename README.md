@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 Traistats - Obsdslp RPG Dashboard
 
-## Getting Started
+Traistats adalah aplikasi pelacak kebiasaan (Habit Tracker) interaktif dengan antarmuka bergaya **RPG (Role-Playing Game)**. Aplikasi ini dirancang untuk mengubah rutinitas harian yang membosankan menjadi sebuah *quest* yang menyenangkan dengan sistem leveling, statistik *skill*, dan elemen gamifikasi.
 
-First, run the development server:
+![Traistats Dashboard](public/globe.svg) <!-- Ganti dengan screenshot aplikasi nanti -->
 
+## ✨ Fitur Utama
+
+- **🎮 Gamifikasi Rutinitas:** Dapatkan EXP dan Manata dari setiap kebiasaan yang diselesaikan.
+- **📊 Pelacak Keterampilan Interaktif:** Visualisasi statistik harian dengan *Radar Chart* dan *Line Chart* (Pasar Garis Bulan) berbasis SVG interaktif.
+- **🕒 Waktu Kosmik:** Integrasi jam analog *real-time* yang estetik di dalam panel profil.
+- **🌌 UI/UX Premium:** Desain antarmuka *Glassmorphism* dengan latar belakang nebula ruang angkasa (*dark mode*).
+- **⚡ Sinkronisasi Real-time:** Data langsung terhubung ke database cloud (Supabase) untuk memastikan *progress* Anda selalu aman dan tersinkronisasi.
+
+## 🛠️ Teknologi yang Digunakan
+
+Aplikasi ini dibangun menggunakan *stack* teknologi modern untuk performa maksimal:
+
+- **Frontend:** [Next.js 16](https://nextjs.org/) (Turbopack), React, Vanilla CSS (Custom UI Framework)
+- **Backend & Database:** [Supabase](https://supabase.com/) (REST API & PostgreSQL)
+- **Deployment:** [Vercel](https://vercel.com/)
+- **Icons & Graphics:** Lucide React & Custom SVG Animations
+
+## 🚀 Panduan Memulai (Local Development)
+
+Untuk menjalankan proyek ini secara lokal di komputer Anda:
+
+### 1. Kloning Repositori
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/zerovan102/Traistats.git
+cd Traistats
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalasi Dependensi
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Konfigurasi Lingkungan (Environment Variables)
+Buat file `.env.local` di *root* direktori proyek dan tambahkan kredensial Supabase Anda:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://[YOUR_SUPABASE_ID].supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=[YOUR_SUPABASE_ANON_KEY]
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Jalankan Server Pengembangan
+```bash
+npm run dev
+```
+Buka [http://localhost:3000](http://localhost:3000) melalui browser Anda untuk melihat hasilnya.
 
-## Learn More
+## 🗄️ Skema Database
 
-To learn more about Next.js, take a look at the following resources:
+Aplikasi ini membutuhkan dua tabel utama di Supabase:
+1. `habits` - Menyimpan daftar kebiasaan, frekuensi, dan tema warna.
+2. `habit_logs` - Menyimpan riwayat penyelesaian kebiasaan berdasarkan tanggal.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*(Skema lengkap tersedia di file `supabase_schema.sql`)*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 Lisensi
 
-## Deploy on Vercel
+Proyek ini bersifat *open-source* dan dapat dimodifikasi untuk keperluan pembelajaran.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Dibangun dengan ❤️ oleh [zerovan102](https://github.com/zerovan102) | Level up your life!*
