@@ -124,10 +124,105 @@ export default function ObsdslpApp() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 30px;
+          grid-template-areas: 
+            "header clock"
+            "quests clock"
+            "tracker points"
+            "habits stats"
+            "market stats";
+        }
+        .area-header { grid-area: header; }
+        .area-clock { grid-area: clock; }
+        .area-quests { grid-area: quests; }
+        .area-tracker { grid-area: tracker; }
+        .area-points { grid-area: points; }
+        .area-habits { grid-area: habits; }
+        .area-market { grid-area: market; }
+        .area-stats { grid-area: stats; }
+
+        @media (max-width: 1024px) {
+          .obs-container { gap: 20px; padding: 20px 15px; }
         }
         @media (max-width: 900px) {
-          .obs-container { grid-template-columns: 1fr; }
+          .obs-container { 
+            grid-template-columns: 1fr; 
+            grid-template-areas: 
+              "header"
+              "clock"
+              "quests"
+              "tracker"
+              "points"
+              "habits"
+              "market"
+              "stats";
+          }
+          .obs-maintitle { font-size: clamp(20px, 8vw, 32px); }
+          .obs-desc { max-width: 100%; font-size: 13px; line-height: 1.4; }
+          .obs-title-section { margin-bottom: 12px; }
+          .radar-image-container { transform: scale(0.8); margin: -40px 0; }
         }
+        @media (max-width: 480px) {
+          /* FORCING 2-COLUMN LAYOUT ON MOBILE */
+          .obs-container { 
+            padding: 10px 6px; 
+            gap: 8px; 
+            grid-template-columns: 1fr 1.1fr; 
+            grid-template-areas: 
+              "header clock"
+              "quests clock"
+              "tracker points"
+              "habits stats"
+              "market stats";
+          }
+          .obs-maintitle { font-size: 14px; margin-bottom: 2px; }
+          .obs-maintitle span { display: block; font-size: 10px; margin-left: 0; }
+          .obs-desc { display: none; }
+          .obs-title-section { margin-bottom: 4px; }
+          
+          .obs-card { padding: 8px; border-radius: 8px; }
+          .obs-card h3 { font-size: 11px !important; }
+          
+          .quest-item { padding: 4px 6px; border-radius: 6px; gap: 6px; margin-bottom: 6px; }
+          .quest-icon { width: 18px; height: 18px; font-size: 10px; }
+          .quest-item div div:first-child { font-size: 9px !important; }
+          .quest-item div div:last-child { font-size: 7px !important; }
+          
+          .chart-container { height: 60px; gap: 3px; }
+          .chart-bar-wrap { min-width: 15px; }
+          .chart-bar-wrap div { font-size: 7px !important; margin-bottom: 2px !important; margin-top: 2px !important; }
+          
+          .habit-row { gap: 6px; margin-bottom: 8px; }
+          .habit-row-icon { width: 24px; height: 24px; border-radius: 6px; font-size: 10px; }
+          .habit-title { font-size: 10px !important; margin-bottom: 0px !important; }
+          .habit-row div:nth-child(2) div:last-child { font-size: 8px !important; }
+          .habit-row div:nth-child(3) { font-size: 8px !important; padding: 3px 6px !important; }
+          
+          .prog-item { margin-bottom: 8px; }
+          .prog-header { font-size: 8px !important; margin-bottom: 3px !important; }
+          .prog-track { height: 3px; }
+          
+          .radar-image-container { transform: scale(0.35); margin: -130px -40px; width: auto; }
+          .obs-circle-ui { transform: scale(0.45); margin: -70px auto; }
+          
+          /* Marketplace adjustments */
+          .area-market svg text { font-size: 8px !important; }
+          .area-market div:last-child { font-size: 7px !important; padding-top: 5px !important; }
+        }
+
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+          0% { box-shadow: 0 0 10px rgba(183, 82, 255, 0.2); }
+          50% { box-shadow: 0 0 25px rgba(183, 82, 255, 0.5); }
+          100% { box-shadow: 0 0 10px rgba(183, 82, 255, 0.2); }
+        }
+        @keyframes rotateRadar {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
         .obs-card {
           background: #130D1E;
           border-radius: 20px;
@@ -135,19 +230,35 @@ export default function ObsdslpApp() {
           margin-bottom: 24px;
           box-shadow: 0 4px 20px rgba(183, 82, 255, 0.05);
           border: 1px solid rgba(183, 82, 255, 0.1);
+          animation: fadeSlideUp 0.6s ease-out forwards;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .obs-card:hover {
+          transform: translateY(-5px);
+          border-color: rgba(183, 82, 255, 0.4);
+          box-shadow: 0 10px 30px rgba(183, 82, 255, 0.15);
+        }
+
+        .area-header { animation-delay: 0.1s; }
+        .area-clock { animation-delay: 0.2s; }
+        .area-quests { animation-delay: 0.3s; }
+        .area-tracker { animation-delay: 0.4s; }
+        .area-points { animation-delay: 0.5s; }
+        .area-habits { animation-delay: 0.6s; }
+
         .obs-title-section {
           margin-bottom: 40px;
         }
         .obs-maintitle {
-          font-size: 48px;
+          font-size: 44px;
           font-weight: 800;
           color: #FFF;
           text-transform: uppercase;
-          line-height: 1.1;
+          line-height: 1;
           text-shadow: 0 0 20px rgba(183, 82, 255, 0.6), 0 0 40px rgba(183, 82, 255, 0.3);
-          margin-bottom: 16px;
+          margin-bottom: 8px;
           letter-spacing: 2px;
+          animation: fadeSlideUp 0.8s ease-out;
         }
         .obs-maintitle span {
           display: block;
@@ -159,6 +270,7 @@ export default function ObsdslpApp() {
           line-height: 1.6;
           max-width: 80%;
         }
+
         .quest-item {
           display: flex;
           align-items: center;
@@ -182,9 +294,14 @@ export default function ObsdslpApp() {
           gap: 20px;
           height: 150px;
           margin-top: 20px;
+          overflow-x: auto;
+          scrollbar-width: none; /* Firefox */
         }
+        .chart-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        
         .chart-bar-wrap {
           flex: 1;
+          min-width: 40px;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
@@ -229,6 +346,7 @@ export default function ObsdslpApp() {
           border: 1px solid rgba(183, 82, 255, 0.3);
           display: flex; align-items: center; justify-content: center;
           transition: all 0.2s;
+          flex-shrink: 0;
         }
         .habit-row.done .habit-row-icon {
           background: rgba(48, 209, 88, 0.2);
@@ -247,6 +365,12 @@ export default function ObsdslpApp() {
           align-items: center;
           justify-content: center;
           margin-bottom: 30px;
+        }
+        @media (max-width: 480px) {
+          .radar-image-container { height: 300px; }
+          .radar-bg:nth-child(2) { width: 300px !important; height: 300px !important; }
+          .radar-bg:first-child { width: 220px !important; height: 220px !important; }
+          .anime-img-placeholder { width: 150px !important; height: 200px !important; }
         }
         .radar-bg {
           width: 300px; height: 300px;
@@ -274,6 +398,7 @@ export default function ObsdslpApp() {
           backdrop-filter: blur(10px);
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           z-index: 1000;
+          padding: 20px;
         }
         .timer-circle {
           width: 200px; height: 200px;
@@ -284,12 +409,54 @@ export default function ObsdslpApp() {
           box-shadow: 0 0 40px rgba(183, 82, 255, 0.4);
           margin-bottom: 30px;
         }
+        @media (max-width: 480px) {
+          .timer-circle { width: 160px; height: 160px; font-size: 36px; }
+        }
         .btn-neon {
           padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: 600;
           border: none; cursor: pointer; transition: all 0.2s;
+          width: 100%; max-width: 250px;
         }
         .btn-neon-start { background: #B752FF; color: white; box-shadow: 0 0 20px rgba(183, 82, 255, 0.5); }
         .btn-neon-stop { background: #FF453A; color: white; box-shadow: 0 0 20px rgba(255, 69, 58, 0.5); }
+
+        .obs-stat-split {
+          display: flex;
+          border-top: 1px solid rgba(255,255,255,0.1);
+          padding-top: 35px;
+        }
+        .obs-stat-side {
+          flex: 1;
+        }
+        .obs-stat-side-left {
+          padding-right: 25px;
+          border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .obs-stat-side-right {
+          padding-left: 25px;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .obs-circle-ui {
+          position: relative;
+          width: 220px;
+          height: 220px;
+          margin: 0 auto;
+          border: 1px solid rgba(183, 82, 255, 0.2);
+          borderRadius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        @media (max-width: 600px) {
+          .obs-stat-split { flex-direction: column; gap: 30px; }
+          .obs-stat-side-left { padding-right: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px; }
+          .obs-stat-side-right { padding-left: 0; }
+          .obs-circle-ui { transform: scale(0.85); margin: -20px auto; }
+        }
+
       `}} />
 
       {/* Timer Modal */}
@@ -309,13 +476,15 @@ export default function ObsdslpApp() {
         </div>
       )}
 
-      {/* LEFT COLUMN */}
-      <div>
+      {/* HEADER SECTION */}
+      <div className="area-header">
         <div className="obs-title-section">
           <h1 className="obs-maintitle">Obsdslp <span>SYSTEM</span></h1>
           <p className="obs-desc">Player Stats initialized. Tracking daily routines and increasing your parameters through continuous leveling.</p>
         </div>
+      </div>
 
+      <div className="area-quests">
         <div className="quest-item">
           <div className="quest-icon">⚡</div>
           <div>
@@ -330,7 +499,9 @@ export default function ObsdslpApp() {
             <div style={{ fontSize: '11px', color: '#8C7AAB' }}>Quest generated automatically</div>
           </div>
         </div>
+      </div>
 
+      <div className="area-tracker">
         <div className="obs-card mt-6">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 600 }}>Skill Tracker</h3>
@@ -350,7 +521,7 @@ export default function ObsdslpApp() {
 
               return (
                 <div key={i} className="chart-bar-wrap" title={h.title}>
-                  <div style={{ fontSize: '11px', color: '#FFF', marginBottom: '8px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%', textAlign: 'center', fontWeight: 'bold' }}>{h.title}</div>
+                  <div style={{ fontSize: '11px', color: '#FFF', marginBottom: '4px', whiteSpace: 'normal', overflow: 'hidden', width: '100%', textAlign: 'center', fontWeight: 'bold', lineHeight: '1', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{h.title}</div>
                   <div className="chart-bar" style={{ height: `${heightPct}%`, opacity: 1 - i * 0.15 }}></div>
                   <div style={{ fontSize: '11px', color: '#8C7AAB', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%', textAlign: 'center', marginTop: '8px' }}>{totalPoints} pts</div>
                 </div>
@@ -358,7 +529,9 @@ export default function ObsdslpApp() {
             })}
           </div>
         </div>
+      </div>
 
+      <div className="area-habits">
         <div className="obs-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 600 }}>Keseharian</h3>
@@ -425,7 +598,9 @@ export default function ObsdslpApp() {
           })}
           {habits.length === 0 && <p style={{ color: '#8C7AAB', fontSize: '13px' }}>No skills recorded yet.</p>}
         </div>
+      </div>
 
+      <div className="area-market">
         <div className="obs-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <h3 style={{ fontSize: '18px', fontWeight: 600 }}>Marketplace (Monthly Line)</h3>
@@ -500,19 +675,19 @@ export default function ObsdslpApp() {
             <span>Day 15</span>
             <span>Day 30 (Today)</span>
           </div>
-        </div>
       </div>
+    </div>
 
-      {/* RIGHT COLUMN */}
-      <div>
+      {/* CLOCK SECTION */}
+      <div className="area-clock">
         <div className="radar-image-container">
           <div className="radar-bg"></div>
-          <div className="radar-bg" style={{ width: '400px', height: '400px', borderStyle: 'dashed', opacity: 0.5 }}></div>
+          <div className="radar-bg" style={{ width: 'min(400px, 90vw)', height: 'min(400px, 90vw)', borderStyle: 'dashed', opacity: 0.5 }}></div>
           <div className="radar-cross"></div>
           {/* Placeholder for the Anime Girl Avatar with Analog Clock overlay */}
           <div className="anime-img-placeholder" style={{ position: 'relative', overflow: 'hidden' }}>
              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(10,5,16,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '160px', height: '160px', borderRadius: '50%', border: '2px solid rgba(183,82,255,0.4)', position: 'relative', boxShadow: 'inset 0 0 20px rgba(183,82,255,0.2), 0 0 20px rgba(183,82,255,0.2)', background: 'rgba(10,5,16,0.3)', backdropFilter: 'blur(2px)' }}>
+                <div style={{ width: 'min(160px, 40vw)', height: 'min(160px, 40vw)', borderRadius: '50%', border: '2px solid rgba(183,82,255,0.4)', position: 'relative', boxShadow: 'inset 0 0 20px rgba(183,82,255,0.2), 0 0 20px rgba(183,82,255,0.2)', background: 'rgba(10,5,16,0.3)', backdropFilter: 'blur(2px)' }}>
                    {/* Clock Markings */}
                    {[...Array(12)].map((_, i) => (
                       <div key={i} style={{ position: 'absolute', top: 0, left: '50%', width: '2px', height: '100%', transform: `translateX(-50%) rotate(${i * 30}deg)` }}>
@@ -545,6 +720,10 @@ export default function ObsdslpApp() {
              </div>
           </div>
         </div>
+      </div>
+
+      {/* POINTS SECTION */}
+      <div className="area-points">
 
         <div className="obs-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
@@ -564,6 +743,10 @@ export default function ObsdslpApp() {
             <div className="prog-track"><div className="prog-fill" style={{ width: '90%' }}></div></div>
           </div>
         </div>
+      </div>
+
+      {/* STATS SECTION */}
+      <div className="area-stats">
 
         <div className="obs-card" style={{ padding: '30px' }}>
           {(() => {
@@ -589,7 +772,7 @@ export default function ObsdslpApp() {
             return (
               <>
                 {/* TOP CIRCLE UI */}
-                <div style={{ position: 'relative', width: '220px', height: '220px', margin: '0 auto', border: '1px solid rgba(183, 82, 255, 0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="obs-circle-ui">
                   <div style={{ position: 'absolute', width: '140px', height: '140px', border: '1px dashed rgba(183, 82, 255, 0.4)', borderRadius: '50%', transform: `scale(${innerScale}) rotate(${dashRotation}deg)`, transition: 'all 1s ease' }}></div>
                   <div style={{ position: 'absolute', width: '70px', height: '70px', borderBottom: '2px solid #B752FF', borderRadius: '50%', transform: `rotate(${radarRotation}deg)`, transition: 'transform 1s ease' }}></div>
                   <div style={{ position: 'absolute', top: '-10px', left: '30px', width: `${orbSize}px`, height: `${orbSize}px`, background: 'rgba(183, 82, 255, 0.2)', border: '2px solid #B752FF', borderRadius: '50%', boxShadow: `0 0 ${15 + completionRatio*20}px #B752FF`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: `${20 + completionRatio*5}px`, transition: 'all 1s ease' }}>🔮</div>
@@ -611,9 +794,9 @@ export default function ObsdslpApp() {
                 </div>
 
                 {/* BOTTOM SPLIT SECTION */}
-                <div style={{ display: 'flex', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '35px' }}>
+                <div className="obs-stat-split">
                   {/* LEFT SIDE */}
-                  <div style={{ flex: 1, paddingRight: '25px', borderRight: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div className="obs-stat-side obs-stat-side-left">
                     {/* Vulture row */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
                       <div>
@@ -656,7 +839,7 @@ export default function ObsdslpApp() {
                   </div>
                   
                   {/* RIGHT SIDE */}
-                  <div style={{ flex: 1, paddingLeft: '25px', display: 'flex', flexDirection: 'column' }}>
+                  <div className="obs-stat-side obs-stat-side-right">
                     <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                       <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#FFF' }}>Manata 2024</div>
                       <div style={{ fontSize: '11px', color: '#8C7AAB', marginTop: '2px' }}>{manataTotal}</div>
@@ -680,7 +863,6 @@ export default function ObsdslpApp() {
             );
           })()}
         </div>
-
       </div>
     </div>
   );
